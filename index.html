@@ -97,6 +97,9 @@ body, html {
     border: 2px solid #333;
     margin-bottom: 10px;
     border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
 /* Available Cars */
@@ -104,9 +107,88 @@ body, html {
     font-weight: bold;
 }
 .available { color: green; }
+.in-workshop { color: orange; }
 .unavailable { color: red; }
 
+/* VIEW DETAILS button */
+.details-btn {
+    padding: 8px 14px;
+    background: #ff9900;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.details-btn:hover {
+    background: #ffaa22;
+}
+
+/* Popup */
+#popup-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#popup-box {
+    background: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 12px;
+    border: 3px solid #333;
+}
+
+#popup-images {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#popup-images img {
+    width: 32%;
+    border-radius: 6px;
+    border: 2px solid #333;
+}
+
+#popup-text {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+#popup-close {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background: #cc0000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#popup-close:hover { background:#ff0000; }
 </style>
+
+<!-- POPUP SYSTEM -->
+<div id="popup-bg">
+    <div id="popup-box">
+        <div id="popup-images">
+            <img src="https://via.placeholder.com/150">
+            <img src="https://via.placeholder.com/150">
+            <img src="https://via.placeholder.com/150">
+        </div>
+        <div id="popup-text">HERE PUT CAR INFO</div>
+        <button id="popup-close" onclick="closePopup()">CLOSE</button>
+    </div>
+</div>
 
 <!-- Header -->
 <div id="header">Tiger's Modifications</div>
@@ -218,28 +300,28 @@ function scrollToSection(id){
     }
 }
 
+// Popup functions
+function openPopup(info){
+    document.getElementById("popup-text").innerText = info;
+    document.getElementById("popup-bg").style.display = "flex";
+}
+function closePopup(){ document.getElementById("popup-bg").style.display = "none"; }
+
 // Dynamic Available Cars
 const availableCars = [
-    { name: "Ibishu Pessima (NONE IN STOCK)", status: "Unavailable", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664387740963039/image.png?ex=6934ceb3&is=69337d33&hm=47e38204e670c990bfb4908c0dfad3a57eee425312776d0c541a25fb028bcfae&a" },
-    { name: "Ibishu BX-Series (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1445855665980440647/1446505139086299156/bxrp.jpg?ex=69343a63&is=6932e8e3&hm=d294f0c6f1f3139a51688d83e4a8e62bd0a1842dd2f2f76ea27f958bf13e5a06&" },
-    { name: "Cherrier FCV (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664745523347547/image.png?ex=6934cf09&is=69337d89&hm=512a45fc66d3cc58d6d251f09434bf937a6c6d45830c16099ef10033d5a02b36&" },
+    { name: "Ibishu Pessima (NONE IN STOCK)", status: "Unavailable", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664387740963039/image.png?ex=6934ceb3&is=69337d33&hm=47e38204e670c990bfb4908c0dfad3a57eee425312776d0c541a25fb028bcfae&", details:"NONE IN STOCK" },
+    { name: "Ibishu BX-Series (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1445855665980440647/1446505139086299156/bxrp.jpg?ex=69358be3&is=69343a63&hm=b7d2be6e515baeae96bbbe6f92a64f3d3878e4c211c7d4fc8cec70ccaaa90830&", details:"NO DETAILS YET" },
+    { name: "Cherrier FCV (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664745523347547/image.png?ex=6934cf09&is=69337d89&hm=512a45fc66d3cc58d6d251f09434bf937a6c6d45830c16099ef10033d5a02b36&", details:"NO DETAILS YET" },
 ];
 
 const container = document.getElementById('available-cars-container');
 availableCars.forEach(car => {
     const card = document.createElement('div');
     card.className = 'car-card';
-    card.style.display = 'flex';
-    card.style.gap = '20px';
-    card.style.alignItems = 'center';
 
     const img = document.createElement('img');
     img.src = car.img;
-    img.alt = car.name;
     img.style.width = '120px';
-    img.style.height = 'auto';
-    img.style.borderRadius = '10px';
-    img.style.border = '2px solid #333';
 
     const textDiv = document.createElement('div');
     textDiv.style.flex = '1';
@@ -247,21 +329,26 @@ availableCars.forEach(car => {
     textDiv.style.justifyContent = 'space-between';
     textDiv.style.alignItems = 'center';
 
+    const btn = document.createElement('button');
+    btn.textContent = 'VIEW DETAILS';
+    btn.className = 'details-btn';
+    btn.onclick = () => openPopup(car.details);
+
+    const statusSpan = document.createElement('span');
+    statusSpan.textContent = car.status;
+    statusSpan.className = 'available-status';
+    if(car.status.toLowerCase() === 'available') statusSpan.classList.add('available');
+    else if(car.status.toLowerCase() === 'in workshop') statusSpan.classList.add('in-workshop');
+    else statusSpan.classList.add('unavailable');
+
+    textDiv.appendChild(btn);
+    textDiv.appendChild(statusSpan);
+
     const nameSpan = document.createElement('span');
     nameSpan.textContent = car.name;
 
-    const statusSpan = document.createElement('span');
-    statusSpan.className = 'available-status';
-    statusSpan.textContent = car.status;
-    statusSpan.style.fontWeight = 'bold';
-    if(car.status.toLowerCase() === 'available') statusSpan.style.color = 'green';
-    else if(car.status.toLowerCase() === 'in workshop') statusSpan.style.color = 'orange';
-    else statusSpan.style.color = 'red';
-
-    textDiv.appendChild(nameSpan);
-    textDiv.appendChild(statusSpan);
-
     card.appendChild(img);
+    card.appendChild(nameSpan);
     card.appendChild(textDiv);
 
     container.appendChild(card);
