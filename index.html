@@ -156,6 +156,7 @@ body, html {
     width: 32%;
     border-radius: 6px;
     border: 2px solid #333;
+    cursor:pointer;
 }
 
 #popup-text {
@@ -175,18 +176,72 @@ body, html {
     font-weight: bold;
 }
 #popup-close:hover { background:#ff0000; }
+
+/* ENLARGED IMAGE */
+#enlarge-bg {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+#enlarge-bg img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 3px solid #fff;
+    border-radius: 8px;
+    cursor:pointer;
+}
+#enlarge-bg button {
+    position:absolute;
+    top:-10px;
+    right:-10px;
+    background:#cc0000;
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    font-weight:bold;
+    cursor:pointer;
+}
+#enlarge-bg span {
+    position:absolute;
+    top:10px;
+    right:10px;
+    color:#fff;
+    font-weight:bold;
+    background:rgba(0,0,0,0.4);
+    padding:4px 8px;
+    border-radius:4px;
+    font-size:14px;
+}
 </style>
 
 <!-- POPUP SYSTEM -->
 <div id="popup-bg">
     <div id="popup-box">
         <div id="popup-images">
-            <img src="">
-            <img src="">
-            <img src="">
+            <img id="popup-img1" src="">
+            <img id="popup-img2" src="">
+            <img id="popup-img3" src="">
         </div>
         <div id="popup-text">HERE PUT CAR INFO</div>
         <button id="popup-close" onclick="closePopup()">CLOSE</button>
+    </div>
+</div>
+
+<!-- ENLARGED IMAGE POPUP -->
+<div id="enlarge-bg" onclick="closeEnlarge()">
+    <div style="position:relative;">
+        <img id="enlarge-img" src="">
+        <span>Left click to close</span>
+        <button onclick="closeEnlarge()">X</button>
     </div>
 </div>
 
@@ -304,13 +359,26 @@ function scrollToSection(id){
 function openPopup(car){
     document.getElementById("popup-text").innerText = car.details;
 
-    document.querySelectorAll("#popup-images img")[0].src = car.img1;
-    document.querySelectorAll("#popup-images img")[1].src = car.img2;
-    document.querySelectorAll("#popup-images img")[2].src = car.img3;
+    document.getElementById("popup-img1").src = car.img1;
+    document.getElementById("popup-img2").src = car.img2;
+    document.getElementById("popup-img3").src = car.img3;
 
     document.getElementById("popup-bg").style.display = "flex";
+
+    // kliknięcie powiększenia
+    document.getElementById("popup-img1").onclick = () => enlargeImage(car.img1);
+    document.getElementById("popup-img2").onclick = () => enlargeImage(car.img2);
+    document.getElementById("popup-img3").onclick = () => enlargeImage(car.img3);
 }
 function closePopup(){ document.getElementById("popup-bg").style.display = "none"; }
+
+function enlargeImage(src){
+    document.getElementById("enlarge-img").src = src;
+    document.getElementById("enlarge-bg").style.display = "flex";
+}
+function closeEnlarge(){
+    document.getElementById("enlarge-bg").style.display = "none";
+}
 
 // Dynamic Available Cars
 const availableCars = [
@@ -318,35 +386,27 @@ const availableCars = [
         name: "Ibishu Pessima (NONE IN STOCK)", 
         status: "Unavailable",
         img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664387740963039/image.png?ex=69357773&is=693425f3&hm=a5119eab9551bdec6013a0e8f126ac0537543775146e54efe8abf6c24d9a2626&",
-
         img1: "https://via.placeholder.com/300x200?text=Pessima+1",
         img2: "https://via.placeholder.com/300x200?text=Pessima+2",
         img3: "https://via.placeholder.com/300x200?text=Pessima+3",
-
         details:"NONE IN STOCK" 
     },
-
     { 
         name: "Ibishu BX-Series (FRESHLY BOUGHT)", 
         status: "In Workshop",
         img: "https://cdn.discordapp.com/attachments/1445855665980440647/1446505139086299156/bxrp.jpg?ex=69358be3&is=69343a63&hm=b7d2be6e515baeae96bbbe6f92a64f3d3878e4c211c7d4fc8cec70ccaaa90830&",
-
         img1: "https://via.placeholder.com/300x200?text=BX+1",
         img2: "https://via.placeholder.com/300x200?text=BX+2",
         img3: "https://via.placeholder.com/300x200?text=BX+3",
-
         details:"NO DETAILS YET" 
     },
-
     { 
         name: "Cherrier FCV (FRESHLY BOUGHT)", 
         status: "Available",
         img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664745523347547/image.png?ex=693577c9&is=69342649&hm=c49d3cb4d83ea05ec9a8621bbce5a6987e52cdbc936376e35fc3877b2fbfe9d7&",
-
         img1: "https://cdn.discordapp.com/attachments/1335640084510408715/1446992242161225768/screenshot_2025-12-06_23-10-50.png?ex=6936000a&is=6934ae8a&hm=3e1c8449b76ae872fdef729aab62e52e3eab413947233d2c0c5dd0ab5839eef0&",
         img2: "https://cdn.discordapp.com/attachments/1335640084510408715/1446992242576195835/screenshot_2025-12-06_23-11-16.png?ex=6936000a&is=6934ae8a&hm=ff337b22c8f326671bef973b27ccbcdb9a3d4b1c63e5d5f4c9833f59f41d923b&",
         img3: "https://cdn.discordapp.com/attachments/1335640084510408715/1446992120492589088/Zrzut_ekranu_2025-12-06_230320.png?ex=6935ffed&is=6934ae6d&hm=0c2e4217d3cf82d370f13b0b854599fa6e2afbcbbdc86f05c6e1ec3719582bd8&",
-
         details:"The custom build Cherrier FCV is equipped with a 2.0L inline 4 with some slight mods that produces 359 HP. Its bumpers were swapped for sport ones which make the car look more agressive on the outside. An AWD system was installed into the car upgrading the grip and acceleration. Its 0-60 MPH comes out at 5.9 seconds and the 60-0 MPH is 2.85 seconds. - ESTIMATED PRICE: 26,500$" 
     },
 ];
@@ -393,3 +453,4 @@ availableCars.forEach(car => {
 });
 </script>
 </div>
+
