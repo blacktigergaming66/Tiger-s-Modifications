@@ -1,0 +1,270 @@
+<div id="beamng-website">
+<style>
+body, html {
+    margin: 0;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+/* Header */
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(to right, #ff6600, #ffcc00);
+    color: #000;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 70px;
+    border-bottom: 3px solid #333;
+    z-index: 1000;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+    text-transform: uppercase;
+    transition: top 0.3s;
+}
+
+/* Navigation */
+#nav-bar {
+    position: fixed;
+    top: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    background: #3399ff;
+    padding: 12px 0;
+    border-bottom: 3px solid #000;
+    z-index: 999;
+    border-radius: 10px;
+    transition: top 0.3s;
+}
+
+/* Buttons */
+.nav-btn{
+    cursor:pointer; 
+    font-size:14px; 
+    font-weight:bold; 
+    padding:10px 22px; 
+    border-radius:12px; 
+    border:2px outset #fff; 
+    background:linear-gradient(to bottom, #ffff66,#ffcc00); 
+    box-shadow:2px 2px 4px rgba(0,0,0,0.4);
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: #ffcc33;
+    color: #000;
+}
+
+/* Sections */
+.section {
+    width: 90%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 25px;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 6px 6px 0 #888;
+    margin-bottom: 50px;
+}
+
+.section h2 {
+    color: #ff0000;
+    text-shadow: 1px 1px #333;
+}
+
+/* Separator */
+.separator {
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.separator div {
+    width: 95%;
+    height: 5px;
+    background: #000;
+    border-radius: 3px;
+}
+
+/* Car Cards */
+.car-card {
+    background: linear-gradient(to right,#ffffcc,#ffeb99);
+    padding: 15px;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+/* Available Cars */
+.available-status {
+    font-weight: bold;
+}
+.available { color: green; }
+.unavailable { color: red; }
+
+</style>
+
+<!-- Header -->
+<div id="header">Tiger's Modifications</div>
+
+<!-- Navigation -->
+<div id="nav-bar">
+    <button onclick="scrollToSection('main')" class="nav-btn">Main</button>
+    <button onclick="scrollToSection('cars')" class="nav-btn">Cars</button>
+    <button onclick="scrollToSection('available-cars')" class="nav-btn">Available Cars</button>
+    <button onclick="scrollToSection('modding')" class="nav-btn">How We Mod</button>
+    <button onclick="scrollToSection('about')" class="nav-btn">About Us</button>
+    <button onclick="scrollToSection('contact')" class="nav-btn">Contact</button>
+</div>
+
+<div style="height:160px;"></div>
+
+<!-- Sections -->
+<div id="main" class="section">
+    <h2>Main</h2>
+    <p>Welcome to Tiger's Modifications! Use the buttons above to jump between sections.</p>
+    <p>This page contains information about our business, our modding process, about our team, and how to contact us.</p>
+</div>
+
+<div class="separator"><div></div></div>
+
+<div id="cars" class="section">
+    <h2>Cars We Buy & Build</h2>
+    <p>Usually we buy RWD, AWD cars for the best acceleration and grip we buy them for cheap from people that had trouble selling their vehicle</p>
+    <p>IF YOU HAVE A CAR FOR SALE HIT US UP! ALL INFO IN CONTACTS!</p>
+    <div class="car-card">
+        <strong>Ibhishu BX-Series</strong><br>
+        Price: $5500 – $17500<br>
+        Very nice JDM car. Perfect for modifying with a very light body and chassis.
+    </div>
+    <div class="car-card">
+        <strong>FCV Cherrier</strong><br>
+        Price: $14500 – $25000<br>
+        Reliable base, comfortable to tune it!
+    </div>
+    <div class="car-card">
+        <strong>Ibishu Pessima MK1</strong><br>
+        Price: $5000 – $15000<br>
+        A little older than all of the cars on the list but its still a cool car to mod some models come in AWD!
+    </div>
+</div>
+
+<div class="separator"><div></div></div>
+
+<!-- Available Cars Section -->
+<div id="available-cars" class="section">
+    <h2>Available Cars</h2>
+    <div id="available-cars-container"></div>
+</div>
+
+<div class="separator"><div></div></div>
+
+<div id="modding" class="section">
+    <h2>How We Mod</h2>
+    <p>We usually tune our cars to around 250 HP it also depends on the weight of the car and prices of the parts</p>
+    <ul>
+        <li>Engine swaps: I4, V6, V8</li>
+        <li>Body mods: Sport/Custom Bumpers, Rims, Sport Tires</li>
+        <li>Interior: Custom Steering Wheel/Bucket Seats</li>
+        <li>Performance testing: 0-60 MPH , Braking Test</li>
+    </ul>
+</div>
+
+<div class="separator"><div></div></div>
+
+<div id="about" class="section">
+    <h2>About Us</h2>
+    <p>We are a BeamMP-focused group building cool cars on a budget. We buy used cars, tune them, and sell them to other people that want to have fun with their friends!</p>
+</div>
+
+<div class="separator"><div></div></div>
+
+<div id="contact" class="section">
+    <h2>Contact</h2>
+    <p>Discord: blacktiger57.</p>
+    <p>Location: (still trying to buy one sorry!)</p>
+</div>
+
+<script>
+// Hide/show header and nav on scroll
+let prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+    let currentScrollPos = window.pageYOffset;
+    if(prevScrollpos > currentScrollPos){
+        document.getElementById("header").style.top = "0";
+        document.getElementById("nav-bar").style.top = "70px";
+    } else {
+        document.getElementById("header").style.top = "-70px";
+        document.getElementById("nav-bar").style.top = "0";
+    }
+    prevScrollpos = currentScrollPos;
+}
+
+// Smooth scroll
+function scrollToSection(id){
+    if(id === 'main') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+    var el = document.getElementById(id);
+    var navHeight = document.getElementById('nav-bar').offsetHeight + 10; 
+    if(el){
+        var elPosition = el.getBoundingClientRect().top + window.pageYOffset - navHeight; 
+        window.scrollTo({ top: elPosition, behavior: 'smooth' });
+    }
+}
+
+// Dynamic Available Cars
+const availableCars = [
+    { name: "Ibishu Pessima (NONE IN STOCK)", status: "Unavailable", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664387740963039/image.png?ex=6934ceb3&is=69337d33&hm=47e38204e670c990bfb4908c0dfad3a57eee425312776d0c541a25fb028bcfae&a" },
+    { name: "Ibishu BX-Series (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1445855665980440647/1446505139086299156/bxrp.jpg?ex=69343a63&is=6932e8e3&hm=d294f0c6f1f3139a51688d83e4a8e62bd0a1842dd2f2f76ea27f958bf13e5a06&" },
+    { name: "Cherrier FCV (FRESHLY BOUGHT)", status: "In Workshop", img: "https://cdn.discordapp.com/attachments/1332839910415274016/1446664745523347547/image.png?ex=6934cf09&is=69337d89&hm=512a45fc66d3cc58d6d251f09434bf937a6c6d45830c16099ef10033d5a02b36&" },
+];
+
+const container = document.getElementById('available-cars-container');
+availableCars.forEach(car => {
+    const card = document.createElement('div');
+    card.className = 'car-card';
+    card.style.display = 'flex';
+    card.style.gap = '20px';
+    card.style.alignItems = 'center';
+
+    const img = document.createElement('img');
+    img.src = car.img;
+    img.alt = car.name;
+    img.style.width = '120px';
+    img.style.height = 'auto';
+    img.style.borderRadius = '10px';
+    img.style.border = '2px solid #333';
+
+    const textDiv = document.createElement('div');
+    textDiv.style.flex = '1';
+    textDiv.style.display = 'flex';
+    textDiv.style.justifyContent = 'space-between';
+    textDiv.style.alignItems = 'center';
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = car.name;
+
+    const statusSpan = document.createElement('span');
+    statusSpan.className = 'available-status';
+    statusSpan.textContent = car.status;
+    statusSpan.style.fontWeight = 'bold';
+    if(car.status.toLowerCase() === 'available') statusSpan.style.color = 'green';
+    else if(car.status.toLowerCase() === 'in workshop') statusSpan.style.color = 'orange';
+    else statusSpan.style.color = 'red';
+
+    textDiv.appendChild(nameSpan);
+    textDiv.appendChild(statusSpan);
+
+    card.appendChild(img);
+    card.appendChild(textDiv);
+
+    container.appendChild(card);
+});
+</script>
+</div>
